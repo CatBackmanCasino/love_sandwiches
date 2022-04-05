@@ -31,10 +31,15 @@ def get_sales_data():
         if validate_data(sales_data):
             print("Data is valid")
             break
+    return sales_data
 
 
 def validate_data(values):
+    """
+    Validates the data from user input
+    """
     try:
+        [int(value) for value in values]
         if len(values) != 6:
             raise ValueError(
                 f"Exactly 6 numbers required.\nYou provided {len(values)}"
@@ -45,4 +50,16 @@ def validate_data(values):
     return True
 
 
-get_sales_data()
+def update_sales_worksheet(data):
+    """
+    updates sales worksheet with user input data
+    """
+    print("updating sales data...")
+    sales_worksheet = SHEET.worksheet("sales")
+    sales_worksheet.append_row(data)
+    print("Successfullt updated worksheet")
+
+
+data = get_sales_data()
+sales_data = [int(num) for num in data]
+update_sales_worksheet(sales_data)
